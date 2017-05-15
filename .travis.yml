@@ -36,7 +36,7 @@ before_install:
       brew unlink php55;
       brew unlink php56; 
       brew install php70;
-      brew tap microsoft/msodbcsql https://github.com/Microsoft/homebrew-mssql-release;
+      brew tap microsoft/msodbcsql microsoft/homebrew-mssql-release;
       brew update;
       brew install msodbcsql;
       brew install mssql-tools;
