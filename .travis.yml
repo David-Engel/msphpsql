@@ -50,7 +50,7 @@ install:
 
 script: 
   - |
-    if [ "$TRAVIS_OS_NAME" == "$linux" ]; then
+    if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
       docker run -e TRAVIS_JOB_ID -t -d -w $PHPSQLDIR --link $TEST_PHP_SQL_SERVER --name=client msphpsql-dev
       docker ps -a 
       docker exec client python ./test/setup/setup_dbs.py -dbname $SQLSRV_DBNAME
