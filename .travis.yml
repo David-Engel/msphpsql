@@ -36,8 +36,11 @@ before_install:
       brew unlink php55;
       brew unlink php56; 
       brew install php70;
-      brew install unixodbc;
-      brew install llvm --with-clang --with-clang-extra-tools ;
+      brew tap microsoft/msodbcsql https://github.com/Microsoft/homebrew-mssql-release;
+      brew update;
+      brew install msodbcsql;
+      brew install mssql-tools;
+      brew install autoconf;
       brew install docker;
       chmod a+x ./source/packagize.sh;
     else
@@ -45,8 +48,11 @@ before_install:
     fi
  
 install:
-  - docker build --build-arg PHPSQLDIR=$PHPSQLDIR -t msphpsql-dev -f Dockerfile-msphpsql .
-  - docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password12@' -p 1433:1433 --name=$TEST_PHP_SQL_SERVER -d microsoft/mssql-server-linux
+  - |
+    if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
+      docker build --build-arg PHPSQLDIR=$PHPSQLDIR -t msphpsql-dev -f Dockerfile-msphpsql .
+      docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password12@' -p 1433:1433 --name=$TEST_PHP_SQL_SERVER -d microsoft/mssql-server-linux
+    fi
 
 script: 
   - |
@@ -74,11 +80,11 @@ script:
       /bin/bash packagize.sh
       cd $BUILDDIR/sqlsrv
       phpize
-      ./configure CC='clang' CXX='clang++'
+      ./configure 
       make
       cd $BUILDDIR/pdo_sqlsrv
       phpize
-      ./configure CC='clang' CXX='clang++'
+      ./configure 
       make
     fi
 
