@@ -11,7 +11,7 @@ matrix:
       dist: trusty
       sudo: required
     - os: osx
-      osx_image: xcode8.2
+      osx_image: xcode8.3.2
 
 services:
   - docker
@@ -40,6 +40,7 @@ before_install:
       brew update;
       brew install msodbcsql;
       brew install mssql-tools;
+      brew install llvm --with-clang --with-clang-extra-tools;
       brew install autoconf;
       brew install docker;
       chmod a+x ./source/packagize.sh;
@@ -86,6 +87,7 @@ script:
       phpize
       ./configure 
       make
+      php --ini | grep "Loaded Configuration"
     fi
 
 notifications:
