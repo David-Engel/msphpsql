@@ -32,7 +32,7 @@ before_install:
       brew update
       brew install mssql-tools
       brew cask install docker
-      sudo /Volumes/Docker/Docker.app/Contents/MacOS/Docker
+      /Applications/Docker.app/Contents/MacOS/Docker
       docker ps -a
       docker --version
       docker run hello-world
