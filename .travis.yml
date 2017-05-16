@@ -30,7 +30,7 @@ before_install:
       brew tap microsoft/homebrew-mssql-release
       brew update
       brew install mssql-tools
-      brew install docker
+      brew cask install docker
       docker ps -a
       docker --version
       docker run hello-world
