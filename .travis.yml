@@ -33,18 +33,19 @@ before_install:
       brew tap homebrew/dupes; 
       brew tap homebrew/versions;
       brew tap homebrew/homebrew-php;
-      brew unlink php55;
-      brew unlink php56; 
-      brew install php70;
-      brew tap microsoft/msodbcsql microsoft/homebrew-mssql-release;
+      #brew unlink php55
+      #brew unlink php56 
+      brew install php70
+      #brew tap microsoft/msodbcsql 
+      brew tap microsoft/homebrew-mssql-release
       brew update;
-      brew install msodbcsql;
+      #brew install msodbcsql;
       brew install mssql-tools;
-      brew install llvm --with-clang --with-clang-extra-tools;
-      brew install autoconf;
+      #brew install llvm --with-clang --with-clang-extra-tools;
+      #brew install autoconf;
       brew install docker;
       chmod a+x ./source/packagize.sh;
-      docker pull microsoft/mssql-server-linux
+      #docker pull microsoft/mssql-server-linux
     else
       docker pull microsoft/mssql-server-linux
     fi
@@ -53,8 +54,6 @@ install:
   - |
     if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
       docker build --build-arg PHPSQLDIR=$PHPSQLDIR -t msphpsql-dev -f Dockerfile-msphpsql .
-      docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password12@' -p 1433:1433 --name=$TEST_PHP_SQL_SERVER -d microsoft/mssql-server-linux
-    else
       docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password12@' -p 1433:1433 --name=$TEST_PHP_SQL_SERVER -d microsoft/mssql-server-linux
     fi
 
