@@ -3,11 +3,12 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
+      services: docker
     - os: osx
       osx_image: xcode8.3.2
 
-services:
-  - docker
+#services:
+#  - docker
 
 env:
   global:
@@ -31,6 +32,7 @@ before_install:
       brew update
       brew install mssql-tools
       brew cask install docker
+      sudo /Volumes/Docker/Docker.app/Contents/MacOS/Docker
       docker ps -a
       docker --version
       docker run hello-world
