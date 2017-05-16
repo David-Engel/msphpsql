@@ -44,6 +44,7 @@ before_install:
       brew install autoconf;
       brew install docker;
       chmod a+x ./source/packagize.sh;
+      docker pull microsoft/mssql-server-linux
     else
       docker pull microsoft/mssql-server-linux
     fi
