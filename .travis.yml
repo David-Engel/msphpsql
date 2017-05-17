@@ -7,9 +7,6 @@ matrix:
     - os: osx
       osx_image: xcode8.3.2
 
-#services:
-#  - docker
-
 env:
   global:
   - REPORT_EXIT_STATUS=1
@@ -20,7 +17,6 @@ env:
   - PDOSQLSRV_DBNAME=msphpsql_pdosqlsrv  
 
 before_install:
-  #- docker pull microsoft/mssql-server-linux
   - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
       brew update 
@@ -31,10 +27,6 @@ before_install:
       brew tap microsoft/homebrew-mssql-release
       brew update
       brew install mssql-tools
-      #brew cask install docker
-      #/Applications/Docker.app/Contents/MacOS/Docker
-      #docker ps -a
-      #docker pull microsoft/mssql-server-linux
     else
       docker pull microsoft/mssql-server-linux
     fi
@@ -81,7 +73,8 @@ script:
       ./configure 
       make && make install
       echo "extension = pdo_sqlsrv.so" >> `php --ini | grep "Loaded Configuration" | sed 's/.*:[[:space:]]*//g'`
-      php -m
+      php -m | grep sqlsrv
+      
     fi
 
 notifications:
